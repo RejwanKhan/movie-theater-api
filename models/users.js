@@ -1,9 +1,15 @@
 const { sequelize } = require("../db/connection");
 const { DataTypes } = require("sequelize");
 
-const Users = new sequelize.define("Shows", {
-  name: DataTypes.STRING,
-  email: DataTypes.STRING,
+const Users = sequelize.define("Users", {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
 
 module.exports = { Users };
