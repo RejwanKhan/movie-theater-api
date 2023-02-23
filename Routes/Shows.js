@@ -46,22 +46,32 @@ router.get("/:id", async (req, res) => {
 
 //Updating Shows
 
+// IT MAKES SENSE FOR USER TO NOT BE OPTIONAL SINCE A USER CAN ONLY WATCH IT AND RATE IT, hence it is needed for both updating Status or Rating
 router.put(
   "/:id",
   [
-    check("status").trim().not().isEmpty().isBoolean(),
+    check("status").trim().not().optional().isEmpty().isBoolean(),
     check("name").trim().not().isEmpty(),
+    check("rating").trim().not().optional().isEmpty().isNumeric(),
   ],
   async (req, res) => {
-    const { name, status } = req.body;
-    if (name && status) {
-      const { id } = req.params;
-      let show = await Shows.findByPk(Number(id));
-      show = await show.update({ status: status });
-
-      const user = await Users.findOne({ where: { name: name } });
-      user.addShow(show);
-      res.status(201).send("Updated status of show");
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(500).send({ errors: errors.array() });
+    } else {
+      const { name, status, rating } = req.body;
+      if (name && status) {
+        const { id } = req.params;
+        let show = await Shows.findByPk(Number(id));
+        if (rating) {
+          show = await show.update({ status: status, rating: rating });
+        } else {
+          show = await show.update({ status: status });
+        }
+        const user = await Users.findOne({ where: { name: name } });
+        user.addShow(show);
+        res.status(201).send("Updated status of show");
+      }
     }
   }
 );
