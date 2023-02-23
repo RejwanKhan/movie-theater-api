@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { check, validationResult } = require("express-validator");
 const { Shows } = require("../models/shows");
+const { Users } = require("../models/users");
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -42,5 +43,27 @@ router.get("/:id", async (req, res) => {
     res.status(404).send({ err: "Type in a Number" });
   }
 });
+
+//Updating Shows
+
+router.put(
+  "/:id",
+  [
+    check("status").trim().not().isEmpty().isBoolean(),
+    check("name").trim().not().isEmpty(),
+  ],
+  async (req, res) => {
+    const { name, status } = req.body;
+    if (name && status) {
+      const { id } = req.params;
+      let show = await Shows.findByPk(Number(id));
+      show = await show.update({ status: status });
+
+      const user = await Users.findOne({ where: { name: name } });
+      user.addShow(show);
+      res.status(201).send("Updated status of show");
+    }
+  }
+);
 
 module.exports = router;
