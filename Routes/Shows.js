@@ -4,11 +4,13 @@ const { Shows } = require("../models/shows");
 const { Users } = require("../models/users");
 const router = Router();
 
+//This will send a response of all the shows that exist in the database
 router.get("/", async (req, res) => {
   const allShows = await Shows.findAll();
   res.status(201).send(allShows);
 });
 
+//This will send a response of all the shows that are associated with a genre such as Action or Cartoon
 router.get("/sortBy", async (req, res) => {
   let { genre } = req.query;
   if (genre === undefined) {
@@ -30,6 +32,7 @@ router.get("/sortBy", async (req, res) => {
   }
 });
 
+//Gets Show based on the id of the show, what the user types in the url as the paramater
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -75,5 +78,23 @@ router.put(
     }
   }
 );
+
+//DELETE ONE SHOW
+router.delete("/:id", async (req, res) => {
+  try {
+    let { id } = req.params;
+    id = Number(id);
+    const show = await Shows.findByPk(id);
+    if (show) {
+      await Shows.destroy({ where: { id: id } });
+      res.send("deleted");
+    } else {
+      res.status(404).send("Could not find Show");
+    }
+  } catch (err) {
+    res.status(500).send("Show could not be found");
+    //If User types a word in the paramaters this will be the response instead
+  }
+});
 
 module.exports = router;
