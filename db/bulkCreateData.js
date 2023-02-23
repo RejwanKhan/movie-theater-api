@@ -13,12 +13,17 @@ const dataCreate = async () => {
   await sequelize.sync({ force: true });
 
   await Shows.bulkCreate([
-    { show: "Arcane", rating: 10, genre: "Animated" },
-    { show: "Queen's Gambit", rating: 9, genre: "Strategy" },
-    { show: "Adventure Time", rating: 6, genre: "Cartoon" },
-    { show: "Ed, Edd & Eddy", rating: 4, genre: "Cartoon" },
-    { show: "SpongeBob SquarePants", rating: 7, genre: "Cartoon" },
-    { show: "Prison Break", rating: 3, genre: "Action" },
+    { show: "Arcane", rating: 10, genre: "Animated", status: true },
+    { show: "Queen's Gambit", rating: 9, genre: "Strategy", status: false },
+    { show: "Adventure Time", rating: 6, genre: "Cartoon", status: true },
+    { show: "Ed, Edd & Eddy", rating: 4, genre: "Cartoon", status: true },
+    {
+      show: "SpongeBob SquarePants",
+      rating: 7,
+      genre: "Cartoon",
+      status: true,
+    },
+    { show: "Prison Break", rating: 3, genre: "Action", status: false },
   ]);
 
   //   BULK CREATE USERS
@@ -36,13 +41,11 @@ const dataCreate = async () => {
   const thirdUser = await Users.findByPk(3);
   const fourthUser = await Users.findByPk(4);
 
-  firstUser.addShow(2);
   firstUser.addShow(5);
 
   secondUser.addShow(3);
 
   thirdUser.addShow(1);
-  thirdUser.addShow(6);
 
   fourthUser.addShow(4);
 };

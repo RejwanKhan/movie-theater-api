@@ -14,6 +14,10 @@ const Shows = sequelize.define("Shows", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  status: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+  },
 });
 
 module.exports = { Shows };
