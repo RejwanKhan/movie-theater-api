@@ -16,7 +16,7 @@ const dataCreate = async () => {
     { show: "Arcane", rating: 10, genre: "Animated" },
     { show: "Queen's Gambit", rating: 9, genre: "Strategy" },
     { show: "Adventure Time", rating: 6, genre: "Cartoon" },
-    { show: "Ed, Edd & Eddy", rating: 4, genre: "Cartoom" },
+    { show: "Ed, Edd & Eddy", rating: 4, genre: "Cartoon" },
     { show: "SpongeBob SquarePants", rating: 7, genre: "Cartoon" },
     { show: "Prison Break", rating: 3, genre: "Action" },
   ]);
