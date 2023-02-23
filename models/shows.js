@@ -10,6 +10,10 @@ const Shows = sequelize.define("Shows", {
     type: DataTypes.NUMBER,
     allowNull: false,
   },
+  genre: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
 
 module.exports = { Shows };

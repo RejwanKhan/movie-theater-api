@@ -13,12 +13,12 @@ const dataCreate = async () => {
   await sequelize.sync({ force: true });
 
   await Shows.bulkCreate([
-    { show: "Arcane", rating: 10 },
-    { show: "Queen's Gambit", rating: 9 },
-    { show: "Adventure Time", rating: 6 },
-    { show: "Ed, Edd & Eddy", rating: 4 },
-    { show: "SpongeBob SquarePants", rating: 7 },
-    { show: "Prison Break", rating: 3 },
+    { show: "Arcane", rating: 10, genre: "Animated" },
+    { show: "Queen's Gambit", rating: 9, genre: "Strategy" },
+    { show: "Adventure Time", rating: 6, genre: "Cartoon" },
+    { show: "Ed, Edd & Eddy", rating: 4, genre: "Cartoom" },
+    { show: "SpongeBob SquarePants", rating: 7, genre: "Cartoon" },
+    { show: "Prison Break", rating: 3, genre: "Action" },
   ]);
 
   //   BULK CREATE USERS
