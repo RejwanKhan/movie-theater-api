@@ -48,6 +48,14 @@ router.get("/:id", async (req, res) => {
 });
 
 //Updating Shows
+//NEED TO LOG IN TO UPDATE THE SHOW
+
+router.use((req, res, next) => {
+  if (req.session.user) next();
+  else {
+    res.sendStatus(401);
+  }
+});
 
 // IT MAKES SENSE FOR USER TO NOT BE OPTIONAL SINCE A USER CAN ONLY WATCH IT AND RATE IT, hence it is needed for both updating Status or Rating
 router.put(

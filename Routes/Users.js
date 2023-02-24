@@ -36,8 +36,7 @@ router.post(
 router.post("/login", async (req, res) => {
   const { name, password } = req.body;
   const user = await Users.findOne({ where: { name: name } });
-  console.log(user.password);
-  console.log(req.session.user);
+
   if (req.session.user) {
     return res.send("You are already logged in!");
   }
@@ -54,7 +53,6 @@ router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const user = await Users.findByPk(Number(id));
-    console.log(user);
     if (user.name) {
       res.status(201).send(user);
     }
@@ -67,7 +65,7 @@ router.get("/:id", async (req, res) => {
 router.get("/:id/watch/", async (req, res) => {
   const { id } = req.params;
   const user = await Users.findByPk(Number(id), { include: { model: Shows } });
-  console.log(JSON.stringify(user, null, 2));
+
   if (user) {
     res.status(201).send(user);
   } else {

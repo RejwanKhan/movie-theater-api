@@ -4,6 +4,7 @@ const { dataCreate } = require("../db/bulkCreateData");
 const session = require("express-session");
 const ShowRouter = require("../Routes/Shows");
 const UserRouter = require("../Routes/Users");
+const router = require("../Routes/Shows");
 
 dataCreate();
 app.use(
