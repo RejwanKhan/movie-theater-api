@@ -62,7 +62,7 @@ router.put(
   "/:id",
   [
     check("status").trim().not().optional().isEmpty().isBoolean(),
-    check("name").trim().not().isEmpty(),
+    // check("name").trim().not().isEmpty(), //Remove this and remove line 82 and req.session.user, and deconstruct {name} from req.body if you don't want authentication
     check("rating").trim().not().optional().isEmpty().isNumeric(),
   ],
   async (req, res) => {
@@ -70,8 +70,8 @@ router.put(
     if (!errors.isEmpty()) {
       res.status(500).send({ errors: errors.array() });
     } else {
-      const { name, status, rating } = req.body;
-      if (name && status) {
+      const { status, rating } = req.body;
+      if (req.session.user && status) {
         const { id } = req.params;
         let show = await Shows.findByPk(Number(id));
         if (rating) {
@@ -79,6 +79,7 @@ router.put(
         } else {
           show = await show.update({ status: status });
         }
+        const { name } = req.session.user;
         const user = await Users.findOne({ where: { name: name } });
         user.addShow(show);
         res.status(201).send("Updated status of show");
