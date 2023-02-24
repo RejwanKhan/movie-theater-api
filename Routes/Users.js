@@ -10,6 +10,45 @@ router.get("/", async (req, res) => {
   res.status(201).send(allUsers);
 });
 
+//Making a signUp page to create a user
+router.post(
+  "/signUp",
+  [
+    check("name").trim().not().isEmpty().isLength({ min: 4, max: 15 }),
+    check("password").trim().not().isEmpty().isLength({ min: 3, max: 15 }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(500).send(errors.array());
+    } else {
+      try {
+        const user = await Users.create(req.body);
+        res.status(201).send("User has been created");
+      } catch (err) {
+        res.status(500).send({ err: "User could not be created" });
+      }
+    }
+  }
+);
+
+//Login Page
+router.post("/login", async (req, res) => {
+  const { name, password } = req.body;
+  const user = await Users.findOne({ where: { name: name } });
+  console.log(user.password);
+  console.log(req.session.user);
+  if (req.session.user) {
+    return res.send("You are already logged in!");
+  }
+  if (user && password === user.password) {
+    req.session.user = user;
+    res.status(200).send("You have logged in!");
+  } else {
+    res.status(500).send("name or password is invalid");
+  }
+});
+
 //This will send a response of a user with a particular id
 router.get("/:id", async (req, res) => {
   try {
