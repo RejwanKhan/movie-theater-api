@@ -14,9 +14,24 @@ const dataCreate = async () => {
 
   await Shows.bulkCreate([
     { title: "Arcane", rating: 10, genre: "Animated", status: true },
-    { title: "Queen's Gambit", rating: 9, genre: "Strategy", status: false },
-    { title: "Adventure Time", rating: 6, genre: "Cartoon", status: true },
-    { title: "Ed, Edd & Eddy", rating: 4, genre: "Cartoon", status: true },
+    {
+      title: "Queen's Gambit",
+      rating: 9,
+      genre: "Strategy",
+      status: false,
+    },
+    {
+      title: "Adventure Time",
+      rating: 6,
+      genre: "Cartoon",
+      status: true,
+    },
+    {
+      title: "Ed, Edd & Eddy",
+      rating: 4,
+      genre: "Cartoon",
+      status: true,
+    },
     {
       title: "SpongeBob SquarePants",
       rating: 7,
